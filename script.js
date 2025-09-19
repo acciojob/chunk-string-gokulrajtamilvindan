@@ -1,16 +1,22 @@
 function stringChop(str, size) {
-    if (str === null) return [];      // handle null input
-    size = parseInt(size, 10);        // convert size to number
-    if (isNaN(size) || size <= 0) return [];  // invalid size
-    
-    let result = [];
+    // Return empty array for null/undefined input (acceptance criteria).
+    if (str == null) return [];
+
+    // Convert size to a finite integer. Handle invalid sizes (NaN, <=0).
+    size = Number(size);
+    if (!Number.isFinite(size)) return [];
+    size = Math.floor(size);
+    if (size <= 0) return [];
+
+    // Chunking loop (O(n) time, O(n/size) substrings memory).
+    const result = [];
     for (let i = 0; i < str.length; i += size) {
-        result.push(str.substring(i, i + size));  // safe chunking
+        result.push(str.slice(i, i + size));
     }
     return result;
 }
 
 // Do not change the code below
-const str = prompt("Enter String:");
-const size = prompt("Enter Chunk Size:");
-alert(JSON.stringify(stringChop(str, size)));
+const str = prompt("Enter String.");
+const size = prompt("Enter Chunk Size.");
+alert(stringChop(str, size));
